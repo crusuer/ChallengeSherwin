@@ -45,9 +45,16 @@
 			</div>
 		</div>
 		<div class="panel-footer">
-			<a class="btn btn-sm btn-success" th:href="@{/add/}">Adicionar</a>
-			<a class="btn btn-sm btn-primary" th:href="@{/{id}(id=${1})}">Pesquisar</a>
-			<input type="text" id="codigo" placeholder="Código do Cliente"></input>
+			<a class="btn btn-sm btn-success" th:href="@{/add/}">Adicionar</a> 
+			<a class="btn btn-sm btn-primary" href="" id="link">Pesquisar</a> 
+			<input type="text" id="codigo" placeholder="Código do Cliente" />
+			<script>
+				var $codigo = document.getElementById('codigo'), $link = document.getElementById('link');
+
+				document.getElementById("link").addEventListener("click", function() {
+					$link.href = '/' + $codigo.value;
+				});
+			</script>
 		</div>
 	</div>
 </body>

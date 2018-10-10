@@ -16,47 +16,47 @@ import br.com.sherwin.service.PostService;
 @Controller
 public class PostController {
 
-    @Autowired
-    private PostService service;
+	@Autowired
+	private PostService service;
 
-    @GetMapping("/")
-    public ModelAndView findAll() {
+	@GetMapping("/")
+	public ModelAndView findAll() {
 
-        ModelAndView mv = new ModelAndView("/post");
-        mv.addObject("posts", service.findAll());
+		ModelAndView mv = new ModelAndView("/post");
+		mv.addObject("posts", service.findAll());
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @GetMapping("/{id}")
-    public ModelAndView edit(@PathVariable("id") Long id) {
+	@GetMapping("/{id}")
+	public ModelAndView find(@PathVariable("id") Long id) {
 
-        ModelAndView mv = new ModelAndView("/post");
-        Post post = service.findOne(id).get();
-        mv.addObject("posts", post);
+		ModelAndView mv = new ModelAndView("/post");
+		Post post = service.findOne(id).isPresent() ? service.findOne(id).get() : null;
+		mv.addObject("posts", post);
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @GetMapping("/add")
-    public ModelAndView add(Post post) {
+	@GetMapping("/add")
+	public ModelAndView add(Post post) {
 
-        ModelAndView mv = new ModelAndView("/postAdd");
-        mv.addObject("post", post);
+		ModelAndView mv = new ModelAndView("/postAdd");
+		mv.addObject("post", post);
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @PostMapping("/save")
-    public ModelAndView save(@Valid Post post, BindingResult result) {
+	@PostMapping("/save")
+	public ModelAndView save(@Valid Post post, BindingResult result) {
 
-        if (result.hasErrors()) {
-            return add(post);
-        }
+		if (result.hasErrors()) {
+			return add(post);
+		}
 
-        service.save(post);
+		service.save(post);
 
-        return findAll();
-    }
+		return findAll();
+	}
 
 }
